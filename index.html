@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IFRITEX — взрывозащищённая соединительная коробка JBM</title>
+<style>
+@font-face { font-family:'Navigo'; src:url('https://ifrit-ex.ru/wp-content/themes/1ifriteks_1732618732/fonts/67192c1c39e32929f5263338_Navigo-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Navigo'; src:url('https://ifrit-ex.ru/wp-content/themes/1ifriteks_1732618732/fonts/67192c1c39e32929f5263338_Navigo-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+:root { --ink:#1f1b21; --orange:#faa51c; --orange-deep:#d88900; --muted:#b9b3bc; --ok:#7fe0a3; --blue:#8fd3ff; }
+* { box-sizing:border-box; }
+html, body { margin:0; background:transparent; }
+body { font-family:'Navigo','Segoe UI',Arial,sans-serif; color:#fff; padding:0; }
+.stage { width:100%; max-width:1180px; margin:0 auto; background:radial-gradient(110% 80% at 50% 100%, #33292f 0%, var(--ink) 60%); border-radius:24px; overflow:hidden; position:relative; }
+.head { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; padding:22px 36px 0; }
+.head h1 { margin:0 0 4px; font-size:22px; font-weight:700; letter-spacing:-.01em; line-height:1.15; }
+.head h1 span { color:var(--orange); }
+.head p { margin:0; color:var(--muted); font-size:13px; max-width:640px; line-height:1.45; }
+.series { display:flex; gap:6px; background:rgba(255,255,255,.06); padding:6px; border-radius:999px; border:1px solid rgba(255,255,255,.1); flex-shrink:0; }
+.series button { background:transparent; border:0; color:var(--muted); font:inherit; font-weight:700; font-size:14px; padding:10px 18px; border-radius:999px; cursor:pointer; transition:.2s; }
+.series button.on { background:var(--orange); color:var(--ink); }
+.models { display:flex; flex-wrap:wrap; gap:6px; padding:12px 36px 0; align-items:center; }
+.models span.lbl { font-size:13px; color:var(--muted); margin-right:6px; }
+.models button { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#fff; font:inherit; font-size:12px; padding:6px 12px; border-radius:10px; cursor:pointer; transition:.2s; text-align:left; line-height:1.2; }
+.models button b { display:block; font-size:13px; }
+.models button small { display:block; color:var(--muted); font-size:11px; margin-top:2px; }
+.models button.on { border-color:var(--orange); background:rgba(250,165,28,.14); }
+.models button.on small { color:#f6d9a6; }
+.cfg { margin-left:auto; display:flex; align-items:center; gap:10px; padding:6px 14px 6px 10px; border-radius:10px; border:1px dashed rgba(250,165,28,.45); background:rgba(250,165,28,.07); color:#f3cf8f; font-size:12px; font-weight:700; line-height:1.25; }
+.cfg svg { width:20px; height:20px; flex-shrink:0; color:var(--orange); }
+.cfg small { display:block; font-weight:400; color:#d3ccd6; font-size:11px; margin-top:1px; }
+.layout { display:grid; grid-template-columns:270px minmax(0,1fr); gap:18px; padding:14px 36px 0; align-items:stretch; }
+.scene { position:relative; width:100%; background:rgba(0,0,0,.18); border-radius:18px; overflow:hidden; }
+.scene svg { display:block; width:100%; height:auto; max-height:min(calc(var(--vh, 800px) * .62), 560px); margin:0 auto; overflow:visible; }
+.disc { position:absolute; z-index:2; left:12px; bottom:10px; right:12px; display:flex; align-items:center; gap:10px; font-size:11.5px; line-height:1.4; color:#d3ccd6; pointer-events:none; background:linear-gradient(90deg, rgba(250,165,28,.12), rgba(28,24,30,.82) 38%); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(250,165,28,.24); border-radius:10px; padding:7px 12px 7px 8px; }
+.disc i { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:rgba(250,165,28,.16); border:1px solid rgba(250,165,28,.55); color:var(--orange); font-style:normal; font-weight:700; font-size:11px; line-height:16px; text-align:center; font-family:Georgia,'Times New Roman',serif; }
+.disc b { color:#f3cf8f; font-weight:700; }
+.cfg-m, .disc-m, .tg.lidm, .models button small .s, .pfx-s, .mchips, .mpop { display:none; }
+.mchip { pointer-events:auto; display:flex; align-items:center; gap:5px; padding:5px 9px 5px 5px; border-radius:999px; font:inherit; font-size:10px; letter-spacing:-.01em; font-weight:700; color:#f3cf8f; background:rgba(28,24,30,.86); border:1px solid rgba(250,165,28,.38); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); cursor:pointer; white-space:nowrap; }
+.mchip i { width:15px; height:15px; border-radius:50%; border:1px solid rgba(250,165,28,.6); color:var(--orange); font-style:normal; font-size:9.5px; line-height:13px; text-align:center; font-family:Georgia,'Times New Roman',serif; flex-shrink:0; }
+.mchip svg { width:15px; height:15px; color:var(--orange); flex-shrink:0; }
+.mchip.on { background:rgba(250,165,28,.2); border-color:var(--orange); }
+.mpop { position:absolute; left:8px; right:8px; bottom:42px; z-index:5; background:rgba(20,17,22,.96); border:1px solid rgba(250,165,28,.4); border-radius:12px; padding:10px 12px; font-size:12px; line-height:1.45; color:#e9e5ea; opacity:0; transform:translateY(6px); transition:opacity .25s, transform .25s; pointer-events:none; }
+.mpop.on { opacity:1; transform:none; pointer-events:auto; }
+.mpop b { color:#f3cf8f; }
+.panel { display:flex; flex-direction:column; gap:8px; order:0; }
+.scene { order:1; }
+.ro { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:8px 12px; }
+.ro span { display:block; font-size:11px; color:var(--muted); letter-spacing:.02em; margin-bottom:3px; }
+.ro strong { display:block; font-size:15px; font-weight:700; line-height:1.2; letter-spacing:-.01em; }
+.ro strong.o { color:var(--orange); } .ro strong.g { color:var(--ok); }
+.ro strong small { display:block; font-size:12px; font-weight:400; color:#b9b3bc; margin-top:2px; }
+.sign { position:absolute; top:14px; left:14px; z-index:3; display:flex; align-items:center; gap:10px; background:rgba(20,17,22,.88); border:1px solid rgba(127,224,163,.35); border-radius:12px; padding:8px 14px 8px 10px; font-size:13px; font-weight:700; color:#e9e5ea; opacity:0; transform:translateY(-6px); transition:opacity .35s, transform .35s; pointer-events:none; }
+.sign.on { opacity:1; transform:none; }
+.sign svg { width:30px; height:30px; flex-shrink:0; }
+.frost { position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0; transition:opacity .6s; border-radius:18px; background:radial-gradient(ellipse 70% 80% at 50% 45%, rgba(143,211,255,0) 55%, rgba(143,211,255,.14) 78%, rgba(214,238,255,.34) 100%); box-shadow:inset 0 0 70px rgba(200,232,255,.28); }
+.frost.on { opacity:1; }
+.scene svg text { font-family:'Navigo','Segoe UI',Arial,sans-serif; }
+.scene svg text.lb { font-size:9.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.scene svg text.dm { font-size:14px; font-weight:700; letter-spacing:-.01em; }
+.scene svg text.dm tspan.u { font-size:10px; font-weight:400; fill:#e0b36a; letter-spacing:.04em; }
+.note { background:rgba(31,27,33,.75); border-left:3px solid var(--orange); padding:10px 14px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.45; color:#e9e5ea; }
+.controls { display:flex; align-items:center; gap:8px; padding:14px 36px 24px; flex-wrap:wrap; }
+.controls span.lbl { font-size:13px; color:var(--muted); margin-right:6px; }
+.tg { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#fff; font:inherit; font-size:13px; padding:9px 14px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:.2s; }
+.tg b { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.25); }
+.tg.on { border-color:var(--orange); background:rgba(250,165,28,.12); }
+.tg.on b { background:var(--orange); box-shadow:0 0 10px var(--orange); }
+.tg.pw { display:none; } .tg.pw.show { display:flex; }
+.tg.lid { margin-left:auto; background:var(--orange); border-color:var(--orange); color:var(--ink); font-weight:700; padding:10px 20px; box-shadow:0 6px 20px rgba(250,165,28,.35); }
+.tg.lid:hover { background:#fff; border-color:#fff; }
+#lidG { transition:opacity .55s ease, transform .55s ease; transform-box:fill-box; transform-origin:50% 50%; }
+#lidG.open { opacity:0; transform:scale(1.04); pointer-events:none; }
+.seal { transition:opacity .3s; }
+.gasfx { transition:opacity .5s; } .frostfx { transition:opacity .5s; }
+@media (min-width:901px) {
+  html.short .note { font-size:12px; line-height:1.4; padding:8px 12px; } html.short .ro { padding:6px 12px; } html.short .ro strong { font-size:14px; } html.short .ro strong small { font-size:11px; } html.short .panel { gap:6px; }
+  html.short .head { padding-top:18px; } html.short .models { padding-top:10px; } html.short .controls { padding:12px 36px 18px; }
+}
+@media (max-width:900px) {
+  .stage { display:flex; flex-direction:column; border-radius:20px; }
+  .layout { display:contents; }
+  .head { order:1; padding:16px 14px 0; flex-direction:column; gap:10px; }
+  .series { width:100%; padding:4px; } .series button { flex:1; padding:9px 4px; font-size:13px; text-align:center; }
+  .models { order:2; padding:8px 14px 0; display:grid; grid-template-columns:repeat(var(--n, 4), minmax(0,1fr)); gap:6px; }
+  .models span.lbl, .models .cfg { display:none; }
+  .models button { text-align:center; padding:6px 4px; }
+  .scene { order:3; width:auto; margin:10px 14px 0; padding-top:44px; }
+  .scene svg { max-height:max(230px, calc(var(--vh, 700px) - 250px)); }
+  .disc { display:none; }
+  .tg.lidm { display:flex; flex-direction:row; position:absolute; top:7px; right:8px; z-index:4; margin:0; min-height:0; padding:7px 14px; font-size:12px; line-height:1.2; border-radius:999px; box-shadow:0 4px 14px rgba(250,165,28,.3); }
+  .controls { order:4; padding:8px 14px 14px; display:grid; grid-template-columns:repeat(var(--nt, 4), minmax(0,1fr)); gap:6px; align-items:stretch; }
+  .controls span.lbl, .controls .tg.lid { display:none; }
+  .tg { flex-direction:column; justify-content:center; gap:4px; padding:6px 3px; border-radius:12px; font-size:11px; line-height:1.15; text-align:center; min-height:48px; hyphens:manual; }
+  .tg.pw.show { display:flex; }
+  .panel { order:5; margin:12px 14px 16px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .note, .cfg-m, .disc-m { grid-column:1 / -1; }
+  .mchips { display:flex; position:absolute; left:6px; right:6px; bottom:7px; z-index:4; gap:6px; justify-content:space-between; pointer-events:none; }
+  .mpop { display:block; }
+  .sign { top:8px; left:8px; padding:4px 10px 4px 6px; font-size:11px; gap:6px; } .sign svg { width:22px; height:22px; }
+}
+@media (max-width:560px) {
+  .head h1 { font-size:17px; } .head p { display:none; }
+  .models button b .pfx { display:none; }
+  .models button small .l { display:none; } .models button small .s { display:inline; }
+  .panel { grid-template-columns:1fr; }
+  .sign span { font-size:10.5px; }
+  .mchip .sh { display:none; }
+}
+@media (max-width:340px) { .mchip .lg { display:none; } .mchip .sh { display:inline; } }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="head">
+    <div>
+      <h1>Соединительная коробка <span>JBM</span>: что внутри и что снаружи</h1>
+      <p>Выберите серию и модель — коробка в масштабе: корпус, клеммы, вводы и т.д.<br>Откройте крышку, включите условия среды.</p>
+    </div>
+    <div class="series" id="series">
+      <button data-s="H" class="on">JBM/H</button><button data-s="LB">JBM/LB</button><button data-s="K">JBM/K</button><button data-s="PS">JBM/PS</button>
+    </div>
+  </div>
+  <div class="models" id="models"><span class="lbl">Модель</span></div>
+
+  <div class="layout">
+    <div class="scene">
+      <svg viewBox="-260 -30 520 510" id="svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36333a"/><stop offset="1" stop-color="#1a181c"/></linearGradient>
+          <linearGradient id="gLid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b383f"/><stop offset=".5" stop-color="#232026"/><stop offset="1" stop-color="#151317"/></linearGradient>
+          <linearGradient id="gRail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8e8a94"/><stop offset=".3" stop-color="#d8d5db"/><stop offset=".7" stop-color="#b3afb8"/><stop offset="1" stop-color="#7a767f"/></linearGradient>
+          <linearGradient id="gBrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d98a"/><stop offset=".5" stop-color="#c99a3c"/><stop offset="1" stop-color="#8a6420"/></linearGradient>
+          <linearGradient id="gPlast" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a575f"/><stop offset=".5" stop-color="#2f2d33"/><stop offset="1" stop-color="#1b191e"/></linearGradient>
+          <linearGradient id="gPlate" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#cfced3"/><stop offset=".5" stop-color="#eeedf1"/><stop offset="1" stop-color="#c4c3c9"/></linearGradient>
+          <linearGradient id="gPipe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d6873"/><stop offset=".35" stop-color="#c9c4cc"/><stop offset=".6" stop-color="#8f8994"/><stop offset="1" stop-color="#3a353f"/></linearGradient>
+          <linearGradient id="gIns" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e5765"/><stop offset=".5" stop-color="#4a4350"/><stop offset="1" stop-color="#332e38"/></linearGradient>
+          <radialGradient id="gLamp" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#9df0b4"/><stop offset=".5" stop-color="#3fcf6e"/><stop offset="1" stop-color="#1b7a3a"/></radialGradient>
+          <linearGradient id="gFade" gradientUnits="userSpaceOnUse" x1="0" y1="428" x2="0" y2="482"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+          <mask id="mFade" maskUnits="userSpaceOnUse" x="-900" y="-400" width="1800" height="1000"><rect x="-900" y="-400" width="1800" height="1000" fill="url(#gFade)"/></mask>
+          <linearGradient id="gNut" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfcbd3"/><stop offset=".5" stop-color="#8c8791"/><stop offset="1" stop-color="#4f4a56"/></linearGradient>
+          <radialGradient id="gRing" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#e2dfe6"/><stop offset=".6" stop-color="#9d98a4"/><stop offset="1" stop-color="#5d5864"/></radialGradient>
+          <radialGradient id="gHole" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#2a262e"/><stop offset="1" stop-color="#050406"/></radialGradient>
+          <radialGradient id="gLampOff" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#4f8a5f"/><stop offset="1" stop-color="#1e3d28"/></radialGradient>
+          <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+          <pattern id="pe" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#2fa14a"/><rect width="3" height="6" fill="#e8d33a"/></pattern>
+        </defs>
+        <g id="env" mask="url(#mFade)"></g>
+        <g id="mount" mask="url(#mFade)"></g>
+        <g id="dims"></g>
+        <g id="cables"></g>
+        <g id="box"></g>
+        <g id="lidG"></g>
+        <g id="fx"></g>
+        <g id="fxOver"></g>
+      </svg>
+      <div class="frost" id="frost"></div>
+      <div class="sign" id="sign"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="#7fe0a3" stroke-width="2.5"/><path d="M20 9 l-4 9 h5 l-3 10 l9 -13 h-5 l3 -6 z" fill="#fff"/><path d="M8 32 L32 8" stroke="#7fe0a3" stroke-width="3" stroke-linecap="round"/></svg><span>Вид взрывозащиты 1Ex eb</span></div>
+      <button class="tg lid lidm" id="lidBtnM">Открыть крышку</button>
+      <div class="mpop" id="mpop"></div>
+      <div class="mchips"><button class="mchip" data-pop="d"><i>i</i><span>Схема условная</span></button><button class="mchip" data-pop="c"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm8.4 4.9-.1-2.8 2-1.6-2-3.5-2.4.9a8 8 0 0 0-2.4-1.4L15 2.5h-4l-.5 2.5a8 8 0 0 0-2.4 1.4l-2.4-.9-2 3.5 2 1.6-.1 1.4.1 1.4-2 1.6 2 3.5 2.4-.9a8 8 0 0 0 2.4 1.4l.5 2.5h4l.5-2.5a8 8 0 0 0 2.4-1.4l2.4.9 2-3.5-2-1.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="lg">Индивидуальная комплектация</span><span class="sh">Индив. комплектация</span></button></div>
+      <div class="disc" id="disc"><i>i</i><span><b>Схема условная:</b> пропорции по чертежам, комплектация и внешний вид могут отличаться. Точная конфигурация — по опросному листу.</span></div>
+    </div>
+    <div class="panel">
+      <div class="ro"><span>Модель · корпус, мм</span><strong class="o" id="rModel">JBM/H.1ST</strong><strong id="rSize" style="font-size:13px;font-weight:400;color:#e9e5ea;margin-top:2px">120×122×91,5</strong></div>
+      <div class="ro"><span>Подключений</span><strong id="rConn">до 3</strong></div>
+      <div class="ro"><span>Крепление</span><strong id="rMount">на трубе, опора МКВ</strong></div>
+      <div class="ro"><span>Защита · маркировка</span><strong style="font-size:13px">IP66 · −60…+55 °C · УХЛ1</strong><strong style="font-size:13px">1Ex eb IIC T3…T6 Gb X</strong></div>
+      <div class="note" id="note"></div>
+      <div class="cfg cfg-m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm8.4 4.9-.1-2.8 2-1.6-2-3.5-2.4.9a8 8 0 0 0-2.4-1.4L15 2.5h-4l-.5 2.5a8 8 0 0 0-2.4 1.4l-2.4-.9-2 3.5 2 1.6-.1 1.4.1 1.4-2 1.6 2 3.5 2.4-.9a8 8 0 0 0 2.4 1.4l.5 2.5h4l.5-2.5a8 8 0 0 0 2.4-1.4l2.4.9 2-3.5-2-1.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Возможность индивидуальной комплектации<small>клеммных наборов, кабельных вводов</small></span></div>
+      <div class="disc disc-m"><i>i</i><span><b>Схема условная:</b> пропорции по чертежам, комплектация и внешний вид могут отличаться. Точная конфигурация — по опросному листу.</span></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <span class="lbl">Условия среды</span>
+    <button class="tg" data-fx="dust"><b></b><span>Пыль</span></button>
+    <button class="tg" data-fx="rain"><b></b><span>Дождь</span></button>
+    <button class="tg" data-fx="frost"><b></b><span>Мороз −60&nbsp;°C</span></button>
+    <button class="tg" data-fx="gas"><b></b><span>Взрыво&shy;опасная зона</span></button>
+    <button class="tg pw" id="pwBtn"><b></b><span>Питание подано</span></button>
+    <button class="tg lid" id="lidBtn">Открыть крышку</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ===== ДАННЫЕ МОДЕЛЕЙ (мм). leg — встроенная опора-ввод под теплоизоляцию. mods — клеммы сверху вниз: g серая, b синяя, pe земля ===== */
+  var LEG = { adapter:15, stem:96, stemW:44, baseW:128 };
+  var MODELS = [
+    { id:'H.1ST', s:'H', w:120, h:122, d:91.5, leg:true,  conn:'до 3', mods:['g','g','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:[] }, out:'leg' },
+    { id:'H.2ST', s:'H', w:120, h:122, d:91.5, leg:false, conn:'до 2', mods:['g','g','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'], bottom:['plast'] }, out:'gland' },
+    { id:'H.3ST', s:'H', w:160, h:160, d:94.5, leg:true,  conn:'до 4', mods:['g','g','g','b','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'] }, out:'leg' },
+    { id:'H.4ST', s:'H', w:160, h:160, d:94.5, leg:false, conn:'до 4', mods:['g','g','g','b','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'], bottom:['plast','plast'] }, out:'gland' },
+    { id:'LB.1ST', s:'LB', w:120, h:122, d:91.5, leg:true,  conn:'до 2', mods:['g','g','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:[] }, out:'leg', lamp:true },
+    { id:'LB.2ST', s:'LB', w:120, h:122, d:91.5, leg:false, conn:'до 2', mods:['g','g','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'], bottom:['plast'] }, out:'gland', lamp:true },
+    { id:'LB.3ST', s:'LB', w:160, h:160, d:94.5, leg:true,  conn:'до 3', mods:['g','g','g','b','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'] }, out:'leg', lamp:true },
+    { id:'LB.4ST', s:'LB', w:160, h:160, d:94.5, leg:false, conn:'до 3', mods:['g','g','g','b','b','pe','pe'], pitch:10, glands:{ right:['brass'], left:['plast'], bottom:['plast','plast'] }, out:'gland', lamp:true },
+    { id:'K.1ST', s:'K', w:120, h:122, d:91.5, leg:true,  conn:'до 4', mods:['g','g','g','g','g','g','g','g','g','g'], pitch:5.2, glands:{ right:['plast'], left:[] }, out:'leg', ctrl:true },
+    { id:'K.2ST', s:'K', w:120, h:122, d:91.5, leg:false, conn:'до 2', mods:['g','g','g','g','g','g','g','g','pe','pe'], pitch:5.2, glands:{ right:['plast'], left:['plast'], bottom:['plast'] }, out:'gland', ctrl:true },
+    { id:'PS.1ST', s:'PS', w:255, h:250, d:120, leg:false, conn:'до 6 силовых', mods:['g','g','g','g','g','g','g','g','pe','pe','pe','pe'], pitch:16, glands:{ leftBig:['brass','brass'], right:['plast','plast','plast','plast'] }, out:'none', power:true }
+  ];
+  var SERIES = {
+    H:  { purpose:'Греющий кабель', text:'JBM/H — подключение и распределение греющего кабеля. Силовой кабель заходит через бронированный ввод справа. ' },
+    LB: { purpose:'Греющий кабель + индикация питания', text:'JBM/LB — то же, что JBM/H, плюс зелёный индикатор на крышке. Горит — когда на нагревательную секцию подано напряжение в начале или в конце нагревательной линии. ' },
+    K:  { purpose:'Контрольный кабель / датчики', text:'JBM/K — контрольные и сигнальные цепи: клеммы для кабеля сечением до 4 мм² под кабели управления и датчики температуры. ' },
+    PS: { purpose:'Силовой кабель', text:'JBM/PS — силовая коробка для подключения и распределения питания: до шести силовых кабелей, клеммный набор для кабеля до 35/50 мм². Кабельные вводы для бронированного и небронированного кабеля. Крепится на близлежащей металлоконструкции.' }
+  };
+  var MOUNT = {
+    leg:'На трубе: встроенная опора-ввод МКВ под теплоизоляцию. Греющий кабель заходит в коробку снизу через опору, без отдельного устройства ввода.',
+    gland:'На стене или кронштейне. Греющий кабель выходит из коробки в металлорукаве и заходит под теплоизоляцию через устройство КВИТ.',
+    legK:'На трубе: встроенная опора-ввод МКВ под теплоизоляцию. Кабель датчика заходит в коробку снизу через опору.',
+    glandK:'На стене или кронштейне. Кабель датчика выходит через нижний ввод и заходит под теплоизоляцию через устройство КВИТ.',
+    none:''
+  };
+  var $=function(i){ return document.getElementById(i); };
+  var MOB=window.matchMedia('(max-width:560px)');
+  /* подпись, на телефоне — в две строки; dir 1 вниз, -1 вверх (последняя строка на y) */
+  function L2(x,y,anchor,fill,text,size,dir){
+    var a=' text-anchor="'+anchor+'" font-size="'+(size||11)+'" fill="'+fill+'" class="lb"';
+    if(!MOB.matches||text.indexOf(' ')<0) return '<text x="'+x+'" y="'+y+'"'+a+'>'+text+'</text>';
+    var mid=text.length/2, best=-1; for(var i=0;i<text.length;i++){ if(text[i]===' '&&(best<0||Math.abs(i-mid)<Math.abs(best-mid))) best=i; }
+    var y0=dir===-1?y-13:y;
+    return '<text x="'+x+'" y="'+y0+'"'+a+'><tspan x="'+x+'">'+text.slice(0,best)+'</tspan><tspan x="'+x+'" dy="13">'+text.slice(best+1)+'</tspan></text>';
+  }
+  var cur=MODELS[0], open=false, power=false, lastKey=null, fx={dust:false,rain:false,frost:false,gas:false};
+  var PIPE={ cy:455, r:57, ri:152 };
+
+  function n(v){ return String(Math.round(v*10)/10).replace('.',','); }
+  function dimTxt(label){ var m=/^(.*?) мм$/.exec(label); return m?m[1]+'<tspan class="u"> мм</tspan>':label; }
+  function dimH(x1,x2,y,label,pos){ /* горизонтальная размерная линия */
+    var s='<line class="dl" x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="#b9b3bc" stroke-width="1"/>';
+    s+='<line x1="'+x1+'" y1="'+(y-5)+'" x2="'+x1+'" y2="'+(y+5)+'" stroke="#b9b3bc" stroke-width="1"/><line x1="'+x2+'" y1="'+(y-5)+'" x2="'+x2+'" y2="'+(y+5)+'" stroke="#b9b3bc" stroke-width="1"/>';
+    s+='<text x="'+((x1+x2)/2)+'" y="'+(y+(pos==='below'?14:-5))+'" text-anchor="middle" font-size="12" font-weight="700" fill="#faa51c" class="dm">'+dimTxt(label)+'</text>';
+    return s;
+  }
+  function dimV(x,y1,y2,label,side){
+    var s='<line class="dl" x1="'+x+'" y1="'+y1+'" x2="'+x+'" y2="'+y2+'" stroke="#b9b3bc" stroke-width="1"/>';
+    s+='<line x1="'+(x-5)+'" y1="'+y1+'" x2="'+(x+5)+'" y2="'+y1+'" stroke="#b9b3bc" stroke-width="1"/><line x1="'+(x-5)+'" y1="'+y2+'" x2="'+(x+5)+'" y2="'+y2+'" stroke="#b9b3bc" stroke-width="1"/>';
+    if(side==='right'){ s+='<text x="'+x+'" y="'+(y1-8)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#faa51c" class="dm">'+dimTxt(label)+'</text>'; }
+    else { var parts=label.split('|'); s+='<text x="'+(x-8)+'" y="'+((y1+y2)/2+(parts.length>1?-2:4))+'" text-anchor="end" font-size="12" font-weight="700" fill="#faa51c" class="dm">'+dimTxt(parts[0])+'</text>'; if(parts.length>1) s+='<text x="'+(x-8)+'" y="'+((y1+y2)/2+12)+'" text-anchor="end" font-size="10" fill="#b9b3bc" class="lb">'+parts[1]+'</text>'; }
+    return s;
+  }
+  function screw(x,y,r){ /* крестовой винт */
+    return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#d9d9de" stroke="#6a6a72" stroke-width=".8"/><path d="M'+(x-r*.6)+' '+y+' h'+(r*1.2)+' M'+x+' '+(y-r*.6)+' v'+(r*1.2)+'" stroke="#55555c" stroke-width="'+(r*.35)+'" stroke-linecap="round"/>';
+  }
+  function gland(x,y,type,dir,big,hoseCap){ /* dir: 1 вправо, -1 влево, 0 вниз; hoseCap — гайка под металлорукав, уже рукава */
+    var L=big?52:36, H=big?34:24, hexH=big?40:28, hexW=big?11:8, capH=big?26:(hoseCap?11:18), capW=big?14:10;
+    var fill=type==='brass'?'url(#gBrass)':'url(#gPlast)', stroke=type==='brass'?'#6b4d14':'#0e0d10';
+    var g='';
+    if(dir===0){ g='<g transform="translate('+x+' '+y+') rotate(90)">'; } else { g='<g transform="translate('+x+' '+y+') scale('+dir+' 1)">'; }
+    g+='<rect x="0" y="'+(-hexH/2)+'" width="'+hexW+'" height="'+hexH+'" rx="1.5" fill="'+fill+'" stroke="'+stroke+'" stroke-width=".8"/>';
+    g+='<rect x="'+hexW+'" y="'+(-H/2)+'" width="'+(L-hexW-capW)+'" height="'+H+'" rx="3" fill="'+fill+'" stroke="'+stroke+'" stroke-width=".8"/>';
+    g+='<rect x="'+(L-capW)+'" y="'+(-capH/2)+'" width="'+capW+'" height="'+capH+'" rx="2" fill="'+(hoseCap?'url(#gNut)':fill)+'" stroke="'+(hoseCap?'#3a363f':stroke)+'" stroke-width=".8"/>';
+    for(var i=1;i<4;i++){ g+='<line x1="'+(L-capW+i*capW/4)+'" y1="'+(-capH/2)+'" x2="'+(L-capW+i*capW/4)+'" y2="'+(capH/2)+'" stroke="rgba(0,0,0,.35)" stroke-width=".7"/>'; }
+    g+='</g>';
+    return g;
+  }
+  var HOSE0=26, HOSE_NUT=10; /* гофра надета на накидную гайку ввода (10 мм): тело ввода видно, гайка под рукавом */ /* длина штуцера под металлорукав от стенки корпуса */
+  function nutInHose(x,y,dir){ /* чёрная гайка с частой резьбой, видна внутри гофры */
+    var g=dir===0?'<g transform="translate('+x+' '+y+') rotate(90)">':'<g transform="translate('+x+' '+y+') scale('+dir+' 1)">';
+    var a=HOSE0, b=HOSE0+HOSE_NUT;
+    g+='<rect x="'+a+'" y="-5.6" width="'+HOSE_NUT+'" height="11.2" rx="1.2" fill="#1a181d" stroke="#050406" stroke-width=".7"/>';
+    for(var t=a+0.9;t<b-0.4;t+=1.15){ g+='<line x1="'+t+'" y1="-5.2" x2="'+(t+0.5)+'" y2="5.2" stroke="#9a95a0" stroke-width=".5" opacity=".85"/>'; }
+    g+='<rect x="'+a+'" y="-5.6" width="'+HOSE_NUT+'" height="3" fill="#fff" opacity=".08"/>';
+    g+='<rect x="'+a+'" y="-7" width="'+HOSE_NUT+'" height="14" fill="#45414b" opacity=".14"/>';
+    for(var r=a+1;r<b;r+=4){ g+='<rect x="'+r+'" y="-7" width="1.4" height="14" fill="#d2cdd6" opacity=".16"/>'; }
+    return g+'</g>';
+  }
+  function hose(path,color,cw){ /* металлорукав надет на гайку ввода: гайка видна сквозь гофру, кабель начинается за ней */
+    var skip=HOSE_NUT+1, cab='stroke-dasharray="0 '+skip+' 99999"';
+    var s='<path d="'+path+'" fill="none" stroke="#0c0b0e" stroke-width="16" opacity=".85"/>';
+    s+='<path d="'+path+'" fill="none" stroke="#45414b" stroke-width="14" opacity=".55"/>';
+    s+='<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="'+cw+'" opacity=".6" '+cab+'/>';
+    s+='<path d="'+path+'" fill="none" stroke="#d2cdd6" stroke-width="14" stroke-dasharray="1.4 2.6" opacity=".42"/>';
+    s+='<path d="'+path+'" fill="none" stroke="#0c0b0e" stroke-width="14" stroke-dasharray="1 3" stroke-dashoffset="-2.2" opacity=".3"/>';
+    return s;
+  }
+  function cable(path,color,w,armor){
+    var s='<path d="'+path+'" fill="none" stroke="#0b0b0d" stroke-width="'+(w+2)+'" stroke-linecap="round"/><path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="'+w+'" stroke-linecap="round"/>';
+    if(armor) s+='<path d="'+path+'" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="'+(w*.5)+'" stroke-dasharray="3 5" stroke-linecap="butt"/>';
+    return s;
+  }
+  function moduleSVG(cx,y,pitch,kind,wide){
+    var w=wide?62:48, hh=pitch-1, f=kind==='g'?'#a7a7ad':kind==='b'?'#3a7bd5':'url(#pe)';
+    var s='<rect x="'+(cx-w/2)+'" y="'+y+'" width="'+w+'" height="'+hh+'" rx="1.2" fill="'+f+'" stroke="#2a2a2e" stroke-width=".5"/>';
+    if(pitch>=8){ var sr=pitch*.22; s+='<circle cx="'+(cx-w/2+w*.2)+'" cy="'+(y+hh/2)+'" r="'+sr+'" fill="#2c2c30"/><circle cx="'+(cx+w/2-w*.2)+'" cy="'+(y+hh/2)+'" r="'+sr+'" fill="#2c2c30"/><rect x="'+(cx-w*.12)+'" y="'+(y+hh*.3)+'" width="'+(w*.24)+'" height="'+(hh*.4)+'" fill="rgba(255,255,255,.35)"/>'; }
+    else { s+='<circle cx="'+(cx-w/2+w*.18)+'" cy="'+(y+hh/2)+'" r="1.1" fill="#2c2c30"/><circle cx="'+(cx+w/2-w*.18)+'" cy="'+(y+hh/2)+'" r="1.1" fill="#2c2c30"/>'; }
+    return s;
+  }
+
+  function botX(m,i){ return (i===0?1:-1)*m.w*0.25; } /* нижние вводы: первый справа от кронштейна, второй симметрично слева */
+  function draw(m){
+    var w=m.w, h=m.h, top, bottom;
+    PIPE.ri=m.leg?PIPE.r+LEG.stem-1:107; /* у опоры изоляция до верха стойки, у настенных — прежняя */
+    if(m.leg){ bottom=PIPE.cy-PIPE.r-(LEG.adapter+LEG.stem); }
+    else if(m.power){ bottom=410; }
+    else { bottom=PIPE.cy-PIPE.ri-72; }
+    top=bottom-h;
+    var HW=MOB.matches?(m.power?240:(w>130?205:190)):260, X=HW-10;
+    var L=-w/2, R=w/2, inset=5, cavL=L+inset, cavT=top+inset, cavW=w-2*inset, cavH=h-2*inset;
+
+    /* --- окружение: труба с изоляцией (с вырезом под ногу) или металлоконструкция --- */
+    var env='';
+    if(!m.power){
+      var cutL=m.leg?-LEG.baseW/2-14:9999, cutR=m.leg?LEG.baseW/2+14:9999;
+      env+='<rect x="-900" y="'+(PIPE.cy-PIPE.ri)+'" width="1800" height="'+(PIPE.ri*2)+'" fill="url(#gIns)"/>';
+      env+='<rect x="-900" y="'+(PIPE.cy-PIPE.ri)+'" width="1800" height="'+(PIPE.ri*2)+'" fill="none" stroke="#7b7482" stroke-width="1"/>';
+      if(m.leg){ env+='<rect x="'+cutL+'" y="'+(PIPE.cy-PIPE.ri-1)+'" width="'+(cutR-cutL)+'" height="'+(PIPE.ri+2)+'" fill="#151318"/>';
+        env+='<line x1="'+cutL+'" y1="'+(PIPE.cy-PIPE.ri+0.4)+'" x2="'+cutR+'" y2="'+(PIPE.cy-PIPE.ri+0.4)+'" stroke="#9d96a3" stroke-width="1.2" stroke-dasharray="5 4" opacity=".85"/>'; }
+      env+='<rect x="'+(m.leg?cutL:-900)+'" y="'+(PIPE.cy-PIPE.r)+'" width="'+(m.leg?(cutR-cutL):1800)+'" height="'+(PIPE.r*2)+'" fill="url(#gPipe)"/>';
+      env+='<rect x="'+(m.leg?cutL:-900)+'" y="'+(PIPE.cy-PIPE.r+4)+'" width="'+(m.leg?(cutR-cutL):1800)+'" height="9" rx="4" fill="#fff" opacity=".15"/>';
+      env+='<text x="'+X+'" y="'+(PIPE.cy-PIPE.ri+16)+'" text-anchor="end" font-size="11" fill="#b5aebb" class="lb">теплоизоляция</text>';
+      env+='<text x="'+(m.leg?cutR-6:-X)+'" text-anchor="'+(m.leg?'end':'start')+'" y="'+(PIPE.cy-PIPE.r+26)+'" font-size="11" fill="#e9e5ea" class="lb">труба</text>';
+    } else {
+      env+='<rect x="-900" y="'+(top-40)+'" width="1800" height="14" fill="#3b363f" stroke="#57515d" stroke-width="1"/><rect x="-900" y="'+(bottom+26)+'" width="1800" height="14" fill="#3b363f" stroke="#57515d" stroke-width="1"/>';
+      env+='<rect x="'+(L-4)+'" y="'+(top-40)+'" width="'+(w+8)+'" height="'+(h+80)+'" rx="4" fill="#2a262e" stroke="#57515d" stroke-width="1"/>';
+      env+='<text x="'+(-X)+'" y="'+(bottom+58)+'" font-size="11" fill="#9d96a3" class="lb">металлоконструкция</text>';
+    }
+    $('env').innerHTML=env;
+
+    /* --- опора (нога) или кронштейн + MKB --- */
+    var mt='';
+    if(m.leg){
+      var y0=bottom, y1=y0+LEG.adapter, y2=y1+LEG.stem, sw=LEG.stemW/2, bw=LEG.baseW/2;
+      mt+='<rect x="-20" y="'+y0+'" width="40" height="'+LEG.adapter+'" fill="#2c2930" stroke="#4a444f" stroke-width="1"/>';
+      mt+='<rect x="-15" y="'+(y0+3)+'" width="6" height="6" fill="#c9c4cc"/><rect x="9" y="'+(y0+3)+'" width="6" height="6" fill="#c9c4cc"/>';
+      var ys=y1+LEG.stem*.5, nw=12;
+      mt+='<path d="M'+(-sw)+' '+y1+' H'+sw+' V'+ys+' C '+sw+' '+(y2-22)+' '+(bw-10)+' '+(y2-26)+' '+bw+' '+(y2-26)+' V'+y2+' H'+(nw+6)+' L'+nw+' '+(y2-9)+' H'+(-nw)+' L'+(-nw-6)+' '+y2+' H'+(-bw)+' V'+(y2-26)+' C '+(-bw+10)+' '+(y2-26)+' '+(-sw)+' '+(y2-22)+' '+(-sw)+' '+ys+' Z" fill="#26232a" stroke="#4a444f" stroke-width="1"/>';
+      mt+='<path d="M'+(-bw)+' '+(y2-26)+' v-6 h6 v6 M'+bw+' '+(y2-26)+' v-6 h-6 v6" fill="#26232a" stroke="#4a444f" stroke-width="1"/>';
+      mt+='<path d="M'+(-bw+10)+' '+(y2-2)+' q '+(bw-10-sw)+' -6 '+(bw-10-sw)+' -20 M'+(bw-10)+' '+(y2-2)+' q '+(-(bw-10-sw))+' -6 '+(-(bw-10-sw))+' -20" fill="none" stroke="#403b46" stroke-width="1"/>';
+      mt+='<rect x="'+(-sw+4)+'" y="'+(y1+2)+'" width="6" height="'+(LEG.stem*.45)+'" fill="#3a363f" opacity=".7"/>';
+      /* кабель внутри опоры: приглушённый, чтобы было видно, что он скрыт корпусом */
+      var ic=m.ctrl?'#8fd3ff':'#faa51c', iw=m.ctrl?4:7;
+      var ycab=y2-iw/2;
+      mt+='<path d="M'+(-bw)+' '+ycab+' H-36 C -18 '+ycab+' -4 '+(ycab-12)+' -4 '+(ycab-40)+' V'+(y0-2)+'" fill="none" stroke="'+ic+'" stroke-width="'+iw+'" stroke-linecap="round" stroke-linejoin="round" opacity=".32"/>';
+      if(!m.ctrl) mt+='<path d="M'+bw+' '+ycab+' H36 C 18 '+ycab+' 4 '+(ycab-12)+' 4 '+(ycab-40)+' V'+(y0-2)+'" fill="none" stroke="'+ic+'" stroke-width="'+iw+'" stroke-linecap="round" stroke-linejoin="round" opacity=".32"/>';
+      mt+='<text x="'+(sw+10)+'" y="'+(y1+30)+'" font-size="11" fill="#e9e5ea" class="lb">МКВ</text>';
+    } else if(!m.power){
+      var by0=bottom, by1=PIPE.cy-PIPE.ri;
+      mt+='<rect x="-5" y="'+by0+'" width="10" height="'+(by1-by0)+'" fill="#3b363f" stroke="#57515d" stroke-width="1"/>';
+      mt+='<rect x="-18" y="'+(by1-6)+'" width="36" height="8" rx="2" fill="#4a444f" stroke="#6a6470" stroke-width="1"/>';
+      var bots=(m.glands.bottom||[]), i;
+      for(i=0;i<bots.length;i++){ var mx=botX(m,i); mt+='<rect x="'+(mx-11)+'" y="'+(by1-14)+'" width="22" height="16" rx="3" fill="url(#gPlast)" stroke="#0e0d10" stroke-width=".8"/><rect x="'+(mx-7)+'" y="'+(by1-2)+'" width="14" height="6" fill="#8e8a94"/>';
+        if(i===0) mt+='<text x="'+mx+'" y="'+(by1+18)+'" text-anchor="middle" font-size="11" fill="#e9e5ea" class="lb">КВИТ</text>'; }
+    }
+    $('mount').innerHTML=mt;
+
+    /* --- кабели снаружи --- */
+    var cb='', cr='', hz='', gy=top+h*0.5; /* cr — внешние кабели питания/управления: всегда поверх размерных линий */
+    if(m.power){
+      var lg=m.glands.leftBig, k;
+      for(k=0;k<lg.length;k++){ var yy=top+h*(0.32+k*0.3); cb+=cable('M'+(L-52)+' '+yy+' H-260','#141416',14,true); }
+      var rg=m.glands.right;
+      for(k=0;k<rg.length;k++){ var yr=top+h*(0.2+k*0.2); cb+=cable('M'+(R+36)+' '+yr+' H260','#141416',9,false); }
+      cb+=L2(-X,top+h*0.62+42,'start','#e9e5ea','силовые кабели',11,1);
+    } else {
+      cr+=cable('M'+(R+36)+' '+gy+' H260',m.ctrl?'#2b3a5a':'#141416',m.ctrl?7:11,!m.ctrl);
+      cr+=m.ctrl?'<text x="'+X+'" y="'+(gy-26)+'" text-anchor="end" font-size="11" fill="#e9e5ea" class="lb"><tspan x="'+X+'">контрольный</tspan><tspan x="'+X+'" dy="13">кабель</tspan></text>':L2(X,gy-12,'end','#e9e5ea','силовой кабель',11,-1);
+      var oc=m.ctrl?'#8fd3ff':'#faa51c', ow=m.ctrl?4:7;
+      if(m.leg){
+        var yb=PIPE.cy-PIPE.r-ow/2, cutL2=-LEG.baseW/2-14;
+        cb+=cable('M'+cutL2+' '+yb+' H'+(-LEG.baseW/2+1),oc,ow,false);
+        if(!m.ctrl) cb+=cable('M'+(LEG.baseW/2+14)+' '+yb+' H'+(LEG.baseW/2-1),oc,ow,false);
+        cb+=L2(cutL2-6,yb+22,'end',oc,m.ctrl?'кабель датчика':'греющий кабель IFX',11,1);
+      } else {
+        var bots2=(m.glands.bottom||[]), j;
+        for(j=0;j<bots2.length;j++){ var mx2=botX(m,j); if(m.ctrl) cb+=cable('M'+mx2+' '+(bottom+36)+' V '+(PIPE.cy-PIPE.ri-14),oc,ow,false); else hz+=hose('M'+mx2+' '+(bottom+HOSE0)+' V '+(PIPE.cy-PIPE.ri-14),oc,ow); }
+        if(m.glands.left.length){ if(m.ctrl) cb+=cable('M'+(L-36)+' '+gy+' H'+(L-70)+' C '+(L-90)+' '+gy+' '+(L-100)+' '+(gy+20)+' '+(L-100)+' '+(gy+60)+' V '+(PIPE.cy-PIPE.ri-14),oc,ow,false); else hz+=hose('M'+(L-HOSE0)+' '+gy+' H'+(L-70)+' C '+(L-90)+' '+gy+' '+(L-100)+' '+(gy+20)+' '+(L-100)+' '+(gy+60)+' V '+(PIPE.cy-PIPE.ri-14),oc,ow); cb+='<rect x="'+(L-111)+'" y="'+(PIPE.cy-PIPE.ri-14)+'" width="22" height="16" rx="3" fill="url(#gPlast)" stroke="#0e0d10" stroke-width=".8"/>'; }
+        cb+=L2(L-44,gy-16,'end',oc,m.ctrl?'кабель датчика':'греющий кабель IFX',10,-1);
+      }
+    }
+    if(m.leg){ $('env').innerHTML+=cb; $('cables').innerHTML=cr; } else { $('cables').innerHTML=cb+cr; }
+
+    /* --- корпус со снятой крышкой --- */
+    var b='';
+    b+='<ellipse cx="0" cy="'+(bottom+6)+'" rx="'+(w*.7)+'" ry="14" fill="#000" opacity=".4" filter="url(#soft)"/>';
+    /* вводы: сначала те, что выходят из корпуса */
+    var gl=m.glands, q, ys;
+    if(m.power){
+      for(q=0;q<gl.leftBig.length;q++){ b+=gland(L,top+h*(0.32+q*0.3),'brass',-1,true); }
+      for(q=0;q<gl.right.length;q++){ b+=gland(R,top+h*(0.2+q*0.2),gl.right[q],1,false); }
+    } else {
+      for(q=0;q<gl.right.length;q++){ b+=gland(R,gy,gl.right[q],1,false); }
+      for(q=0;q<gl.left.length;q++){ b+=gland(L,gy,gl.left[q],-1,false,!m.leg&&!m.ctrl); }
+      var bt=gl.bottom||[]; for(q=0;q<bt.length;q++){ b+=gland(botX(m,q),bottom,bt[q],0,false,!m.ctrl); }
+      b+=hz; /* металлорукав поверх ввода */
+      if(!m.leg&&!m.ctrl){ for(q=0;q<gl.left.length;q++){ b+=nutInHose(L,gy,-1); } for(q=0;q<bt.length;q++){ b+=nutInHose(botX(m,q),bottom,0); } }
+    }
+    /* болт заземления слева внизу */
+    if(!m.power){ b+='<rect x="'+(L-14)+'" y="'+(bottom-36)+'" width="14" height="5" fill="url(#gBrass)" stroke="#6b4d14" stroke-width=".6"/><rect x="'+(L-11)+'" y="'+(bottom-39)+'" width="4" height="11" fill="url(#gBrass)" stroke="#6b4d14" stroke-width=".6"/>'; }
+    b+='<rect x="'+L+'" y="'+top+'" width="'+w+'" height="'+h+'" rx="9" fill="url(#gBody)" stroke="#57515d" stroke-width="1.2"/>';
+    b+='<rect x="'+cavL+'" y="'+cavT+'" width="'+cavW+'" height="'+cavH+'" rx="6" fill="#0f0e11" stroke="#2a262e" stroke-width="1"/>';
+    b+='<rect id="seal" class="seal" x="'+(cavL-3)+'" y="'+(cavT-3)+'" width="'+(cavW+6)+'" height="'+(cavH+6)+'" rx="8" fill="none" stroke="#faa51c" stroke-width="2.5" opacity="0" filter="url(#glow)"/>';
+    /* бобышки под винты крышки + крепёжные отверстия */
+    var bs=18, corners=[[cavL,cavT,1,1],[cavL+cavW,cavT,-1,1],[cavL,cavT+cavH,1,-1],[cavL+cavW,cavT+cavH,-1,-1]];
+    for(q=0;q<4;q++){ var cx0=corners[q][0], cy0=corners[q][1], sx=corners[q][2], sy=corners[q][3];
+      /* стойка: угол корпуса + четверть-скругление в полость */
+      var path='M'+cx0+' '+cy0+' h'+(sx*bs)+' v'+(sy*(bs-9))+' a9 9 0 0 '+((sx*sy)>0?1:0)+' '+(-sx*9)+' '+(sy*9)+' h'+(-sx*(bs-9))+' z';
+      b+='<path d="'+path+'" fill="url(#gBody)"/>';
+      b+='<path d="M'+(cx0+sx*bs)+' '+cy0+' v'+(sy*(bs-9))+' a9 9 0 0 '+((sx*sy)>0?1:0)+' '+(-sx*9)+' '+(sy*9)+' h'+(-sx*(bs-9))+'" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1.2"/>';
+      b+='<path d="M'+(cx0+sx*(bs+1.5))+' '+(cy0+sy*1.5)+' v'+(sy*(bs-9))+' a9.5 9.5 0 0 '+((sx*sy)>0?1:0)+' '+(-sx*9.5)+' '+(sy*9.5)+' h'+(-sx*(bs-9))+'" fill="none" stroke="rgba(0,0,0,.55)" stroke-width="2"/>';
+      var ix=cx0+sx*8.5, iy=cy0+sy*8.5;
+      b+='<circle cx="'+ix+'" cy="'+iy+'" r="5" fill="#141216" stroke="#3a363f" stroke-width=".6"/>';
+      b+='<circle cx="'+ix+'" cy="'+iy+'" r="3.4" fill="url(#gBrass)" stroke="#6b4d14" stroke-width=".6"/><circle cx="'+ix+'" cy="'+iy+'" r="1.7" fill="#1a1408"/>'; }
+    /* DIN-рейка вертикально */
+    var railT=cavT+10, railB=cavT+cavH-(m.leg?21:10);
+    b+='<rect x="-17.5" y="'+railT+'" width="35" height="'+(railB-railT)+'" fill="url(#gRail)" stroke="#5f5a66" stroke-width=".6"/>';
+    b+='<rect x="-12" y="'+railT+'" width="24" height="'+(railB-railT)+'" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/>';
+    b+='<circle cx="0" cy="'+(railT+7)+'" r="3.5" fill="#c9c4cc" stroke="#55505b" stroke-width=".6"/><path d="M-2.2 '+(railT+7)+' h4.4" stroke="#55505b" stroke-width="1.2"/>';
+    b+='<circle cx="0" cy="'+(railB-7)+'" r="3.5" fill="#c9c4cc" stroke="#55505b" stroke-width=".6"/><path d="M-2.2 '+(railB-7)+' h4.4" stroke="#55505b" stroke-width="1.2"/>';
+    /* клеммы */
+    var total=m.mods.length*m.pitch, my=railT+16+Math.max(-2,((railB-railT-32)-total)/2*0.3);
+    b+='<rect x="'+(m.power?-33:-26)+'" y="'+(my-2)+'" width="'+(m.power?66:52)+'" height="'+(total+4)+'" rx="1.5" fill="#1c1b1f"/>';
+    for(q=0;q<m.mods.length;q++){ b+=moduleSVG(0,my+q*m.pitch,m.pitch,m.mods[q],m.power); }
+    /* проход ноги (гайка УВК) снизу */
+    if(m.leg){ var ny=cavT+cavH-6; /* проход ноги лежит на дне корпуса: плоская гайка, вид сбоку-сверху */
+      b+='<ellipse cx="0" cy="'+(ny+1)+'" rx="18" ry="3" fill="#000" opacity=".45" filter="url(#soft)"/>';
+      b+='<ellipse cx="0" cy="'+ny+'" rx="16" ry="2.8" fill="url(#gNut)" stroke="#55505b" stroke-width=".6"/>';
+      b+='<ellipse cx="0" cy="'+(ny-.8)+'" rx="13.5" ry="2.2" fill="#3a363f" stroke="#6a6470" stroke-width=".5"/>';
+      b+='<path d="M-11 '+(ny-1.2)+' v-3 h22 v3 z" fill="url(#gNut)" stroke="#55505b" stroke-width=".6"/>';
+      b+='<path d="M-3.8 '+(ny-1.2)+' v-3 M3.8 '+(ny-1.2)+' v-3" stroke="rgba(0,0,0,.35)" stroke-width=".7"/><rect x="-3.8" y="'+(ny-4.2)+'" width="7.6" height="3" fill="rgba(255,255,255,.12)"/>';
+      b+='<ellipse cx="0" cy="'+(ny-4.2)+'" rx="11" ry="1.9" fill="#c9c4cc" stroke="#6a6470" stroke-width=".5"/>';
+      b+='<rect x="-7.5" y="'+(ny-6.4)+'" width="15" height="2.2" fill="url(#gRing)" stroke="#6a6470" stroke-width=".5"/>';
+      b+='<ellipse cx="0" cy="'+(ny-6.4)+'" rx="7.5" ry="1.5" fill="#a9a4af" stroke="#6a6470" stroke-width=".5"/>';
+      b+='<ellipse cx="0" cy="'+(ny-6.4)+'" rx="5" ry="1" fill="url(#gHole)"/>'; }
+    $('box').innerHTML=b;
+
+    /* --- крышка --- */
+    var ld='';
+    ld+='<rect x="'+L+'" y="'+top+'" width="'+w+'" height="'+h+'" rx="9" fill="url(#gLid)" stroke="#5f5964" stroke-width="1.2"/>';
+    ld+='<rect x="'+(L+5)+'" y="'+(top+5)+'" width="'+(w-10)+'" height="'+(h-10)+'" rx="6" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>';
+    var scs=[[L+13.5,top+13.5],[R-13.5,top+13.5],[L+13.5,bottom-13.5],[R-13.5,bottom-13.5]];
+    for(q=0;q<4;q++){ ld+=screw(scs[q][0],scs[q][1],3.6); }
+    /* шильдик */
+    var pw=w*.62, ph=Math.max(22,h*.2), px=-pw/2, py=top+(m.lamp?h*.14:h*.22);
+    ld+='<rect x="'+px+'" y="'+py+'" width="'+pw+'" height="'+ph+'" rx="1.5" fill="url(#gPlate)" stroke="#8e8a94" stroke-width=".6"/>';
+    ld+='<text x="0" y="'+(py+ph*.42)+'" text-anchor="middle" font-size="'+(ph*.34)+'" font-weight="700" fill="#1f1b21" class="pl" letter-spacing=".08em">IFRITEX</text>';
+    ld+='<rect x="'+(px+pw*.2)+'" y="'+(py+ph*.5)+'" width="'+(pw*.6)+'" height="'+(ph*.26)+'" fill="none" stroke="#6a6a72" stroke-width=".5"/>';
+    ld+='<text x="0" y="'+(py+ph*.93)+'" text-anchor="middle" font-size="'+(ph*.15)+'" fill="#3a3a40" class="pl">ОТКРЫВАТЬ, ОТКЛЮЧИВ ОТ СЕТИ!</text>';
+    ld+='<text x="'+(px+pw+4)+'" y="'+(py+ph*.5)+'" font-size="'+(ph*.22)+'" font-weight="700" fill="#8e8a94" class="pl">Ex</text>';
+    if(m.lamp){
+      var ly=top+h*.64, lr=Math.min(19,w*.16);
+      ld+='<circle cx="0" cy="'+ly+'" r="'+(lr+5)+'" fill="#e9e5ea" stroke="#9d96a3" stroke-width=".8"/>';
+      ld+='<circle id="lamp" cx="0" cy="'+ly+'" r="'+lr+'" fill="url(#gLamp)" filter="url(#glow)"/>';
+      ld+='<circle cx="'+(-lr*.35)+'" cy="'+(ly-lr*.4)+'" r="'+(lr*.22)+'" fill="#fff" opacity=".55"/>';
+    }
+    $('lidG').innerHTML=ld;
+    setLamp();
+
+    /* --- размерные линии --- */
+    var dm='';
+    dm+=dimH(L,R,top-16,n(w)+' мм','above');
+    var xr=R+(m.power?60:52);
+    dm+=dimV(xr,top,bottom,n(h)+' мм','right');
+    if(m.leg){ var yb2=bottom+LEG.adapter+LEG.stem; dm+=dimV(L-52,top,yb2,n(h+LEG.adapter+LEG.stem)+' мм','left'); }
+    $('dims').innerHTML=dm;
+    var vbB=m.power?bottom+(MOB.matches?118:104):482; /* у PS запас снизу: балка конструкции видна над плашкой */
+    var vt=top-(MOB.matches?36:58);
+    $('svg').setAttribute('viewBox',(-HW)+' '+vt+' '+(2*HW)+' '+(vbB-vt));
+    if(m.power) $('env').removeAttribute('mask'); else $('env').setAttribute('mask','url(#mFade)');
+    gapDims();
+  }
+  /* размерные линии уходят «за» подписи: в местах пересечения с подписью линия прерывается */
+  function gapDims(){
+    var boxes=[]; ['env','mount','cables'].forEach(function(g){ $(g).querySelectorAll('text').forEach(function(t){ try{ var b=t.getBBox(); if(b.width) boxes.push(b); }catch(e){} }); });
+    $('dims').querySelectorAll('line.dl').forEach(function(ln){
+      var x1=+ln.getAttribute('x1'), y1=+ln.getAttribute('y1'), x2=+ln.getAttribute('x2'), y2=+ln.getAttribute('y2'), vert=(x1===x2), gaps=[];
+      boxes.forEach(function(b){
+        if(vert){ if(x1>=b.x-3&&x1<=b.x+b.width+3&&b.y+b.height>Math.min(y1,y2)&&b.y<Math.max(y1,y2)) gaps.push([b.y-3,b.y+b.height+3]); }
+        else { if(y1>=b.y-3&&y1<=b.y+b.height+3&&b.x+b.width>Math.min(x1,x2)&&b.x<Math.max(x1,x2)) gaps.push([b.x-3,b.x+b.width+3]); }
+      });
+      if(!gaps.length) return;
+      gaps.sort(function(a,b){ return a[0]-b[0]; });
+      var a0=vert?Math.min(y1,y2):Math.min(x1,x2), a1=vert?Math.max(y1,y2):Math.max(x1,x2), segs=[], c=a0;
+      gaps.forEach(function(g){ if(g[0]>c) segs.push([c,Math.min(g[0],a1)]); c=Math.max(c,g[1]); });
+      if(c<a1) segs.push([c,a1]);
+      var NS='http://www.w3.org/2000/svg', par=ln.parentNode;
+      segs.forEach(function(sg){ var l=document.createElementNS(NS,'line'); ['stroke','stroke-width'].forEach(function(k){ l.setAttribute(k,ln.getAttribute(k)); });
+        if(vert){ l.setAttribute('x1',x1); l.setAttribute('x2',x1); l.setAttribute('y1',sg[0]); l.setAttribute('y2',sg[1]); } else { l.setAttribute('y1',y1); l.setAttribute('y2',y1); l.setAttribute('x1',sg[0]); l.setAttribute('x2',sg[1]); }
+        par.insertBefore(l,ln); });
+      par.removeChild(ln);
+    });
+  }
+
+  function setLamp(){ var l=$('lamp'); if(!l) return; l.setAttribute('fill',power?'url(#gLamp)':'url(#gLampOff)'); l.setAttribute('filter',power?'url(#glow)':'none'); }
+  function setLid(o){ open=o; $('lidG').classList.toggle('open',o); $('lidBtn').textContent=$('lidBtnM').textContent=o?'Закрыть крышку':'Открыть крышку'; }
+
+  function buildModels(s){
+    var box=$('models'); box.innerHTML='<span class="lbl">Модель</span>';
+    box.style.setProperty('--n',MODELS.filter(function(m){ return m.s===s; }).length);
+    MODELS.filter(function(m){ return m.s===s; }).forEach(function(m){
+      var bt=document.createElement('button'); bt.dataset.id=m.id;
+      bt.innerHTML='<b><span class="pfx">JBM/</span>'+m.id+'</b><small><span class="l">'+m.conn+' · '+(m.leg?'на трубе':m.power?'на конструкции':'на стене / кронштейне')+'</span><span class="s">'+m.conn.replace(' силовых','')+' · '+(m.leg?'труба':m.power?'констр.':'стена')+'</span></small>';
+      bt.addEventListener('click',function(){ select(m.id); });
+      box.appendChild(bt);
+    });
+    var cfg=document.createElement('div'); cfg.className='cfg';
+    cfg.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm8.4 4.9-.1-2.8 2-1.6-2-3.5-2.4.9a8 8 0 0 0-2.4-1.4L15 2.5h-4l-.5 2.5a8 8 0 0 0-2.4 1.4l-2.4-.9-2 3.5 2 1.6-.1 1.4.1 1.4-2 1.6 2 3.5 2.4-.9a8 8 0 0 0 2.4 1.4l.5 2.5h4l.5-2.5a8 8 0 0 0 2.4-1.4l2.4.9 2-3.5-2-1.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Возможность индивидуальной комплектации<small>клеммных наборов, кабельных вводов</small></span>';
+    box.appendChild(cfg);
+  }
+  function select(id){
+    cur=MODELS.filter(function(m){ return m.id===id; })[0];
+    document.querySelectorAll('#series button').forEach(function(b){ b.classList.toggle('on',b.dataset.s===cur.s); });
+    document.querySelectorAll('#models button').forEach(function(b){ b.classList.toggle('on',b.dataset.id===id); });
+    draw(cur);
+    $('rModel').textContent='JBM/'+cur.id; $('rSize').textContent=n(cur.w)+'×'+n(cur.h)+'×'+n(cur.d); $('rConn').textContent=cur.conn;
+    $('rMount').innerHTML=cur.leg?'на трубе, опора МКВ<small>основание опоры '+n(LEG.baseW)+' мм</small>':cur.power?'на металлоконструкции':(cur.ctrl?'на стене или кронштейне':'на стене или кронштейне<small>кабель к изоляции — в металлорукаве</small>');
+    $('pwBtn').classList.toggle('show',!!cur.lamp);
+    document.querySelector('.controls').style.setProperty('--nt',cur.lamp?5:4);
+    rebuildFx();
+  }
+  document.getElementById('series').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; buildModels(b.dataset.s); select(MODELS.filter(function(m){ return m.s===b.dataset.s; })[0].id); });
+  $('lidBtn').addEventListener('click',function(){ setLid(!open); });
+  $('lidBtnM').addEventListener('click',function(){ setLid(!open); });
+  var POPS={ d:'<b>Схема условная:</b> пропорции по чертежам, комплектация и внешний вид могут отличаться. Точная конфигурация — по опросному листу.', c:'<b>Возможность индивидуальной комплектации</b> клеммных наборов, кабельных вводов.' }, popKey=null;
+  function showPop(k){ popKey=(popKey===k)?null:k; $('mpop').innerHTML=popKey?POPS[popKey]:$('mpop').innerHTML; $('mpop').classList.toggle('on',!!popKey); document.querySelectorAll('.mchip').forEach(function(c){ c.classList.toggle('on',c.dataset.pop===popKey); }); postH(); }
+  document.querySelectorAll('.mchip').forEach(function(c){ c.addEventListener('click',function(e){ e.stopPropagation(); showPop(c.dataset.pop); }); });
+  document.addEventListener('click',function(e){ if(popKey&&!e.target.closest('.mpop')) showPop(popKey); });
+  $('pwBtn').addEventListener('click',function(){ power=!power; $('pwBtn').classList.toggle('on',power); if(power) lastKey='power'; else if(lastKey==='power') lastKey=null; setLamp(); rebuildFx(); });
+
+  /* --- условия среды --- */
+  var NS='http://www.w3.org/2000/svg';
+  function el(nm,a){ var e=document.createElementNS(NS,nm); for(var k in a) e.setAttribute(k,a[k]); return e; }
+  function anim(e,attr,from,to,dur,delay){ e.appendChild(el('animate',{attributeName:attr,from:from,to:to,dur:dur+'s',begin:delay+'s',repeatCount:'indefinite'})); }
+  function fade(e,dur,delay){ e.appendChild(el('animate',{attributeName:'opacity',values:'0;.85;.85;0',keyTimes:'0;.1;.88;1',dur:dur+'s',begin:delay+'s',repeatCount:'indefinite'})); }
+  function rebuildFx(){
+    var f=$('fx'), o=$('fxOver'); while(f.firstChild) f.removeChild(f.firstChild); while(o.firstChild) o.removeChild(o.firstChild);
+    var L=-cur.w/2, R=cur.w/2, top=parseFloat($('lidG').firstChild.getAttribute('y')), bottom=top+cur.h;
+    if(fx.dust){ for(var i=0;i<44;i++){ var left=i%2===0, d=el('circle',{cy:top+Math.random()*cur.h, r:2+Math.random()*2, fill:'#b08a5a', opacity:0}); var dur=1.6+Math.random()*1.2, del=-Math.random()*dur; anim(d,'cx',left?-480:480,left?L-4:R+4,dur,del); fade(d,dur,del); f.appendChild(d);} }
+    if(fx.rain){ for(var j=0;j<110;j++){ var x=-480+Math.random()*960, over=x>L&&x<R, y1=over?top-6:480, dur2=over?0.35:1.0, del2=-Math.random()*dur2; var r=el('rect',{x:x,width:2.2,height:14,rx:1,fill:'#8fd3ff',opacity:0}); anim(r,'y',-30,y1,dur2,del2); fade(r,dur2,del2); f.appendChild(r);} }
+    if(fx.frost){ var fr2=el('rect',{x:L-3,y:top-3,width:cur.w+6,height:cur.h+6,rx:11,fill:'none',stroke:'#e6f4ff','stroke-width':2.5,opacity:.7}); o.appendChild(fr2); }
+    if(fx.gas){ var g1=el('ellipse',{cx:-90,cy:420,rx:230,ry:110,fill:'#c8e650',opacity:.1,filter:'url(#soft)','class':'gasfx'}); var g2=el('ellipse',{cx:110,cy:110,rx:200,ry:100,fill:'#c8e650',opacity:.09,filter:'url(#soft)','class':'gasfx'}); o.appendChild(g1); o.appendChild(g2); anim(g1,'cx',-110,-70,6,0); anim(g2,'cx',100,140,7,0); }
+    $('frost').classList.toggle('on',fx.frost);
+    var stress=fx.dust||fx.rain; $('seal').setAttribute('opacity',stress?1:0);
+    $('sign').classList.toggle('on',fx.gas);
+    var t=SERIES[cur.s].text+MOUNT[cur.ctrl?cur.out+'K':cur.out];
+    var NOTES={
+      gas:'Для использования, в том числе, во взрывоопасных зонах: вид взрывозащиты 1Ex eb (повышенная защита). Корпус из стеклоармированного полиэстера антистатичен.',
+      frost:'−60 °C: корпус из ударопрочного полиэстера сохраняет прочность, уплотнение крышки не дубеет. Климатическое исполнение УХЛ1.',
+      dust:'IP66: уплотнение крышки и кабельные вводы не пропускают пыль и струи воды. Подсвечен контур уплотнения.',
+      power:'Питание подано: индикатор горит, уведомляя о наличии напряжения. Отслеживание работоспособности нагревательной линии, не открывая коробку.'
+    };
+    NOTES.rain=NOTES.dust;
+    var isOn=function(k){ return k==='power'?(!!cur.lamp&&power):fx[k]; };
+    var key=(lastKey&&isOn(lastKey))?lastKey:null;
+    if(!key){ ['gas','frost','rain','dust','power'].forEach(function(k){ if(!key&&isOn(k)) key=k; }); }
+    if(key) t=NOTES[key];
+    $('note').textContent=t;
+  }
+  document.querySelectorAll('.tg[data-fx]').forEach(function(b){ b.addEventListener('click',function(){ var k=b.dataset.fx; fx[k]=!fx[k]; b.classList.toggle('on',fx[k]); if(fx[k]) lastKey=k; else if(lastKey===k) lastKey=null; rebuildFx(); }); });
+
+  /* автовысота для iframe: сообщаем родителю высоту */
+  function postH(){ try{ if(window.parent!==window) window.parent.postMessage({ifritexJbmHeight:Math.ceil(document.body.getBoundingClientRect().height)},'*'); }catch(e){} } /* высота контента, а не окна: иначе iframe растёт по кругу */
+  window.addEventListener('load',postH); window.addEventListener('resize',postH);
+  if(window.ResizeObserver){ new ResizeObserver(postH).observe(document.body); }
+
+  /* высота окна: в iframe vh = высота самого iframe, поэтому берём высоту окна родителя */
+  function setVH(h){ document.documentElement.style.setProperty('--vh',h+'px'); document.documentElement.classList.toggle('short',h<=760); postH(); }
+  if(window.parent===window){ setVH(window.innerHeight); window.addEventListener('resize',function(){ setVH(window.innerHeight); }); }
+  else { setVH(Math.min(window.screen&&screen.height||800,900)); window.addEventListener('message',function(e){ if(e.data&&e.data.ifritexParentVH) setVH(e.data.ifritexParentVH); }); try{ window.parent.postMessage({ifritexJbmReady:1},'*'); }catch(e){} }
+  if(MOB.addEventListener) MOB.addEventListener('change',function(){ select(cur.id); }); else if(MOB.addListener) MOB.addListener(function(){ select(cur.id); });
+
+  buildModels('H'); select('H.1ST');
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ select(cur.id); });
+})();
+</script>
+</body>
+</html>
